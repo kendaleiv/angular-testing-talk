@@ -4,13 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>reveal.js</title>
+    <title>Components and More: Effective Angular 2 Testing Strategies</title>
 
     <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/theme/white.css">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <style>
+      .reveal h2 {
+        text-transform: initial;
+      }
+    </style>
 
     <!-- Printing and PDF exports -->
     <script>
@@ -23,9 +29,432 @@
   </head>
   <body>
     <div class="reveal">
+
       <div class="slides">
-        <section>Slide 1</section>
-        <section>Slide 2</section>
+        <section>
+          <p>Components and More:<br />Effective Angular 2 Testing Strategies</p>
+          <br />
+          <p><a href="http://kendaleiv.com">Ken Dale</a> / <a href="http://twitter.com/kendaleiv">@kendaleiv</a></p>
+        </section>
+
+        <section>
+          <img class="plain" src="img/framing.png" style="width: 500px;" />
+        </section>
+
+        <section>
+          <p>My Stance On Testing</p>
+          <br />
+          <br />
+          <br />
+          <small>This is allowed to change over time...</small>
+        </section>
+
+        <section>
+          <p>So, we all agree you should test.</p>
+          <br />
+          <br />
+          <br />
+          <br />
+          <img class="fragment plain" src="img/right-question-exclamation.png" style="width: 500px;" />
+        </section>
+
+        <section>
+          <p>Do What Works</p>
+        </section>
+
+        <section>
+          <p>Assumption: You know how to setup Angular 2</p>
+          <br />
+          <br />
+          <small>(or, can learn that elsewhere...)</small>
+        </section>
+
+        <section>
+          <p><code>npm install angular-cli -g</code></p>
+          <p><code>ng new awesomeness</code></p>
+        </section>
+
+        <section>
+          <small>Now that you're all about that testing...</small>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <p>Time for the feature presentation.</p>
+        </section>
+
+        <section>
+          <h2>Angular 2 Testing: Good News</h2>
+        </section>
+
+        <section>
+          <img class="plain" src="img/airplane-first-class.png" />
+        </section>
+
+        <section>
+          <p>It's well documented.</p>
+          <small>(and, if it's not at the moment, it'll get better...)</small>
+        </section>
+
+        <section>
+          <p>Picking a testing tool</p>
+          <small>(Docs use Jasmine...)</small>
+        </section>
+
+        <section>
+          <pre><code data-trim>
+describe('CelebritiesProvider', () => {
+
+  describe('getAll', () => {
+
+    it('should include Taylor Swift', () => {
+      const provider = new CelebritiesProvider();
+      const celebrities = provider.getAll();
+
+      expect(celebrities.some(x => x.givenName === 'Taylor'
+                                && x.familyName === 'Swift'))
+        .toBe(true);
+    });
+
+  });
+
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Things to test</p>
+          <br />
+          <br />
+          <ul>
+            <li>Components</li>
+            <li>Services</li>
+            <li>Pipes</li>
+            <li>Promises</li>
+            <li>Observables</li>
+            <li>... everything else</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Testing Components</h2>
+        </section>
+
+        <section>
+          <p>DI / IoC / #codingthings</p>
+        </section>
+
+        <section>
+          <pre><code data-trim>
+@Component({
+  selector: 'app-my-component',
+  providers: [
+    SomeService
+  ],
+  template: ''
+})
+export class MyComponent {
+  constructor(private someService: SomeService) {
+  }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Let's take a look!</p>
+        </section>
+
+        <section>
+          <pre><code data-trim>
+it('should do something', async(() => {
+  TestBed.compileComponents().then(() => {
+    const fixture = TestBed.createComponent(YourComponent);
+
+    // ----------------------------------------------------
+
+    const app = fixture.componentInstance;
+    app.doSomething();
+    expect(app.something).toBe('something');
+
+    // ----------------------------------------------------
+
+    const element = fixture.debugElement.nativeElement;
+    expect(element.textContent).toContain('something');
+  });
+}));
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Testing Services</p>
+          <br />
+          <br />
+          <br />
+          <img class="fragment plain" src="img/its-just-typescript.png" style="width: 700px;" />
+          <img class="fragment plain" src="img/its-just-typescript-well-sorta.png" style="width: 700px;" />
+          <aside class="notes">
+            Ideally, the bulk of the code is written here. Keep components thin, and do the major programming tasks in ways that aren't tied directly to Angular 2 (where possible/makes sense).
+          </aside>
+        </section>
+
+        <section>
+          <img class="plain" src="img/services-documentation.png" />
+          <br />
+          <br />
+          <br />
+          <small><a href="https://angular.io/docs/ts/latest/guide/architecture.html#!#services">https://angular.io/docs/ts/latest/guide/architecture.html#!#services</a></small>
+        </section>
+
+        <section>
+          <img class="plain" src="img/services-documentation-2.png" />
+          <br />
+          <br />
+          <br />
+          <small><a href="https://angular.io/docs/ts/latest/guide/architecture.html#!#services">https://angular.io/docs/ts/latest/guide/architecture.html#!#services</a></small>
+        </section>
+
+        <section>
+          <img class="plain" src="img/services-everywhere.jpg" />
+        </section>
+
+        <section>
+          <img class="plain" src="img/service-as-a-singleton.png" />
+          <br />
+          <br />
+        </section>
+
+        <section>
+          <img class="plain" src="img/service-as-a-singleton-strikethrough.png" />
+          <small>(wait, SaaS is already a thing...)</small>
+        </section>
+
+        <section>
+          <img class="plain" src="img/service-as-a-singleton-strikethrough.png" />
+          <small>(and, so is Sass...)</small>
+        </section>
+
+        <section>
+          <!-- Show potential shared state issue in code, and what to do instead? -->
+          <p>Counters, state, etc.</p>
+        </section>
+
+        <section>
+          <pre class="stretch"><code data-trim>
+//
+// stock-retriever.service.ts
+//
+
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+
+@Injectable()
+export class StockRetrieverService {
+  constructor(private http: Http) {
+  }
+
+  ...
+}
+
+//
+// stock-retriever.service.spec.ts
+//
+
+it('should construct', async(inject(
+  [StockRetrieverService], (service) => {
+
+  expect(service).toBeDefined();
+})));
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Pipes</p>
+          <br />
+          <br />
+          <p class="fragment"><small>they exist!</small></p>
+          <br />
+          <br />
+          <p class="fragment"><small>and, you probably don't need to figure it out right away</small></p>
+          <br />
+          <br />
+          <p class="fragment">JIT (learning!)</p>
+        </section>
+
+        <section>
+          <h2>Promises</h2>
+          <br />
+          <br />
+          <small>I'm not covering this today, but just be aware of async-ness.</small>
+        </section>
+
+        <section>
+          <h2>Observables</h2>
+          <br />
+          <br />
+          <p>Subscribe to them!</p>
+        </section>
+
+        <section>
+          <p>HTTP, too!</p>
+        </section>
+
+        <section>
+          <pre class="stretch"><code data-trim>
+//
+// MockBackend &amp; Observable
+//
+
+describe('StockRetrieverService (Mocked)', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        StockRetrieverService,
+
+        MockBackend,
+        BaseRequestOptions,
+        {
+          provide: Http,
+          useFactory: (backend, options) => new Http(backend, options),
+          deps: [MockBackend, BaseRequestOptions]
+        }
+      ],
+      imports: [
+        HttpModule
+      ]
+    });
+  });
+
+  describe('fetch', () => {
+    const mockQuote = {
+      LastTradePriceOnly: '123.45',
+      symbol: 'TEST'
+    };
+
+    const mockResponse = {
+      query: {
+        created: new Date().toISOString(),
+        results: {
+          quote: mockQuote
+        }
+      }
+    };
+
+    it('should parse response from endpoint', async(inject(
+      [StockRetrieverService, MockBackend], (service, mockBackend) => {
+
+      mockBackend.connections.subscribe(conn => {
+        conn.mockRespond(new Response(new ResponseOptions(
+          { body: JSON.stringify(mockResponse) })));
+      });
+
+      const result = service.fetch(mockQuote.symbol);
+
+      result.subscribe(res => {
+        expect(res).toEqual({
+          lastTradePrice: 123.45,
+          symbol: mockQuote.symbol,
+          retrieved: mockResponse.query.created
+        });
+      });
+    })));
+  });
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Deep breath.</p>
+        </section>
+
+        <section>
+          <p>(demo time!)</p>
+        </section>
+
+        <section>
+          <p>Now, let's look at overall application testing</p>
+        </section>
+
+        <section>
+          <p>Types of tests</p>
+          <br />
+          <br />
+          <ul>
+            <li class="fragment">Fast and (hopefully) reliable unit tests</li>
+            <li class="fragment">Slower tests</li>
+            <li class="fragment">REALLY PAINFULLY SLOW AND/OR BRITTLE</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>UI tests <s>are the worst</s> can be slow, sometimes brittle.</p>
+        </section>
+
+        <section>
+          <p>My (mostly non-JS) experience with<br />UI testing has been a bit uggggh</p>
+          <br />
+          <br />
+          <br />
+          <h2 class="fragment">YRMV</h2>
+        </section>
+
+        <section>
+          <p>I want to believe.</p>
+        </section>
+
+        <section>
+          <h2>Basically...</h2>
+        </section>
+
+        <section>
+          <p>Favor fast tests. But, don't outright avoid slower ones.</p>
+        </section>
+
+        <section>
+          <h2>Recall the things</h2>
+          <br />
+          <br />
+          <br />
+          <small>Let's land this plane.</small>
+        </section>
+
+        <section>
+          <p>There are different <em>things</em> to test.</p>
+        </section>
+
+        <section>
+          <p>Use the</p>
+          <br />
+          <br />
+          <br />
+          <p>docs/blogs/Twitter/friends/etc.</p>
+        </section>
+
+        <section>
+          <p>For the Angular 2 <em>stuffs</em>, lean into dependency injection.</p>
+        </section>
+
+        <section>
+          <p>Fast tests > slow tests</small></p>
+        </section>
+
+        <section>
+          <p>Go forth, and test!</p>
+        </section>
+
+        <section>
+          <p><a href="https://github.com/kendaleiv/angular2-testing">https://github.com/kendaleiv/angular2-testing</a></p>
+          <br />
+          <img class="plain" src="img/thanks-so-much.png" style="width: 60%" />
+          <br />
+          <br />
+          <h2>Questions?</h2>
+          <p><a href="http://kendaleiv.com">Ken Dale</a> / <a href="http://twitter.com/kendaleiv">@kendaleiv</a></p>
+        </section>
       </div>
     </div>
 
@@ -38,6 +467,11 @@
         history: true,
 
         // More info https://github.com/hakimel/reveal.js#dependencies
+        controls: false,
+        progress: false,
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+        transitionSpeed: 'fast',
+
         dependencies: [
           { src: 'plugin/markdown/marked.js' },
           { src: 'plugin/markdown/markdown.js' },
