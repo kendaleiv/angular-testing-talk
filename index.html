@@ -299,13 +299,17 @@ it('should do something', async(() => {
       FormsModule,                 |         HttpModule
       HttpModule                   |
     ],                             |       ],
-    providers: [],                 |       providers: [
-    bootstrap: [AppComponent]      |         {
-  })                               |           provide: StockRetrieverService,
-  export class AppModule { }       |           useClass: TestStockRetrieverService
+    providers: [                   |       providers: [
+      StockRetrieverService        |         {
+    ],                             |           provide: StockRetrieverService,
+                                   |           useClass: TestStockRetrieverService
                                    |         }
                                    |       ]
-                                   |     });
+                                   |
+                                   |
+    bootstrap: [AppComponent]      |
+  })                               |
+  export class AppModule { }       |     });
           </pre>
         </section>
 
