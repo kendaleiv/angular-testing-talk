@@ -289,17 +289,18 @@ it('should do something', async(() => {
           <pre class="stretch">
 
   @<span class="highlight">NgModule</span>({                      |     <span class="highlight">TestBed</span>.configureTestingModule({
-    declarations: [                |       declarations: [
+                                   |
+    <span class="highlight">declarations</span> [                 |       <span class="highlight">declarations</span>: [
       AppComponent,                |         AppComponent,
       CurrentResultsComponent,     |         CurrentResultsComponent,
       ResultsLogComponent          |         ResultsLogComponent
     ],                             |       ],
-    imports: [                     |       imports: [
+    <span class="highlight">imports</span> [                      |       <span class="highlight">imports</span>: [
       BrowserModule,               |         FormsModule,
       FormsModule,                 |         HttpModule
       HttpModule                   |
     ],                             |       ],
-    providers: [                   |       providers: [
+    <span class="highlight">providers</span>: [                   |       <span class="highlight">providers</span>: [
       StockRetrieverService        |         {
     ],                             |           provide: StockRetrieverService,
                                    |           useClass: TestStockRetrieverService
