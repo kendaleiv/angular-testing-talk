@@ -16,6 +16,10 @@
       .reveal h2 {
         text-transform: initial;
       }
+
+      .highlight {
+        background-color: greenyellow;
+      }
     </style>
 
     <!-- Printing and PDF exports -->
@@ -148,52 +152,6 @@ describe('CelebritiesProvider', () => {
         </section>
 
         <section>
-          <h2>Testing Components</h2>
-        </section>
-
-        <section>
-          <p>DI / IoC / #codingthings</p>
-        </section>
-
-        <section>
-          <pre><code data-trim>
-@Component({
-  selector: 'app-my-component',
-  template: ''
-})
-export class MyComponent {
-  constructor(private someService: SomeService) {
-  }
-}
-          </code></pre>
-        </section>
-
-        <section>
-          <p>Let's take a look!</p>
-        </section>
-
-        <section>
-          <pre><code data-trim>
-it('should do something', async(() => {
-  TestBed.compileComponents().then(() => {
-    const fixture = TestBed.createComponent(YourComponent);
-
-    // ----------------------------------------------------
-
-    const app = fixture.componentInstance;
-    app.doSomething();
-    expect(app.something).toBe('something');
-
-    // ----------------------------------------------------
-
-    const element = fixture.debugElement.nativeElement;
-    expect(element.textContent).toContain('something');
-  });
-}));
-          </code></pre>
-        </section>
-
-        <section>
           <p>Testing Services</p>
           <br />
           <br />
@@ -271,6 +229,84 @@ it('should construct', async(inject([StockRetrieverService], (service) => {
   expect(service).toBeDefined();
 })));
           </code></pre>
+        </section>
+
+        <section>
+          <h2>Testing Components</h2>
+        </section>
+
+        <section>
+          <p>DI / IoC / #codingthings</p>
+        </section>
+
+        <section>
+          <pre><code data-trim>
+@Component({
+  selector: 'app-my-component',
+  template: ''
+})
+export class MyComponent {
+  constructor(private someService: SomeService) {
+  }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Let's take a look!</p>
+        </section>
+
+        <section>
+          <pre><code data-trim>
+it('should do something', async(() => {
+  TestBed.compileComponents().then(() => {
+    const fixture = TestBed.createComponent(YourComponent);
+
+    // ----------------------------------------------------
+
+    const app = fixture.componentInstance;
+    app.doSomething();
+    expect(app.something).toBe('something');
+
+    // ----------------------------------------------------
+
+    const element = fixture.debugElement.nativeElement;
+    expect(element.textContent).toContain('something');
+  });
+}));
+          </code></pre>
+        </section>
+
+        <section>
+          <h2><code>TestBed</code></h2>
+          <br />
+          <br />
+          <br />
+          <small><a href="https://angular.io/docs/js/latest/api/core/testing/index/TestBed-class.html">https://angular.io/docs/js/latest/api/core/testing/index/TestBed-class.html</a></small>
+        </section>
+
+        <section>
+          <pre class="stretch">
+
+  @<span class="highlight">NgModule</span>({                      |     <span class="highlight">TestBed</span>.configureTestingModule({
+    declarations: [                |       declarations: [
+      AppComponent,                |         AppComponent,
+      CurrentResultsComponent,     |         CurrentResultsComponent,
+      ResultsLogComponent          |         ResultsLogComponent
+    ],                             |       ],
+    imports: [                     |       imports: [
+      BrowserModule,               |         FormsModule,
+      FormsModule,                 |         HttpModule
+      HttpModule                   |
+    ],                             |       ],
+    providers: [],                 |       providers: [
+    bootstrap: [AppComponent]      |         {
+  })                               |           provide: StockRetrieverService,
+  export class AppModule { }       |           useClass: TestStockRetrieverService
+                                   |         }
+                                   |       ]
+                                   |     });
+          </pre>
         </section>
 
         <section>
