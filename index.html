@@ -315,6 +315,41 @@ it('should do something', async(() => {
         </section>
 
         <section>
+          <pre class="stretch"><code data-trim>
+beforeEach(() => {
+  TestBed.configureTestingModule({
+    declarations: [
+      YourComponent
+    ],
+    providers: [
+    ],
+    imports: [
+      FormsModule,
+      HttpModule
+    ]
+  });
+});
+
+it('should do something', async(() => {
+  TestBed.compileComponents().then(() => {
+    const fixture = TestBed.createComponent(YourComponent);
+
+    // ----------------------------------------------------
+
+    const app = fixture.componentInstance;
+    app.doSomething();
+    expect(app.something).toBe('something');
+
+    // ----------------------------------------------------
+
+    const element = fixture.debugElement.nativeElement;
+    expect(element.textContent).toContain('something');
+  });
+}));
+          </code></pre>
+        </section>
+
+        <section>
           <p>Pipes</p>
           <br />
           <br />
