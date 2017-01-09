@@ -38,13 +38,13 @@
         <section>
           <p>Components and More:<br />Effective Angular 2 Testing Strategies</p>
           <br />
-          <p><a href="http://kendaleiv.com">Ken Dale</a> / <a href="http://twitter.com/kendaleiv">@kendaleiv</a></p>
+          <p><a href="https://kendaleiv.com">Ken Dale</a> / <a href="http://twitter.com/kendaleiv">@kendaleiv</a></p>
         </section>
 
         <section>
           <p>Components and More:<br />Effective Angular Testing Strategies</p>
           <br />
-          <p><a href="http://kendaleiv.com">Ken Dale</a> / <a href="http://twitter.com/kendaleiv">@kendaleiv</a></p>
+          <p><a href="https://kendaleiv.com">Ken Dale</a> / <a href="http://twitter.com/kendaleiv">@kendaleiv</a></p>
         </section>
 
         <section>
@@ -195,13 +195,7 @@ describe('CelebritiesProvider', () => {
         </section>
 
         <section>
-          <img class="plain" src="img/service-as-a-singleton-strikethrough.png" />
-          <small>(and, so is Sass...)</small>
-        </section>
-
-        <section>
-          <!-- Show potential shared state issue in code, and what to do instead? -->
-          <p>Counters, state, etc.</p>
+          <p>Counters, state, caches, etc.</p>
         </section>
 
         <section>
@@ -253,7 +247,11 @@ export class MyComponent {
         </section>
 
         <section>
-          <p>Let's take a look!</p>
+          <h2><code>TestBed</code></h2>
+          <br />
+          <br />
+          <br />
+          <small><a href="https://angular.io/docs/js/latest/api/core/testing/index/TestBed-class.html">https://angular.io/docs/js/latest/api/core/testing/index/TestBed-class.html</a></small>
         </section>
 
         <section>
@@ -275,14 +273,6 @@ it('should do something', async(() => {
   });
 }));
           </code></pre>
-        </section>
-
-        <section>
-          <h2><code>TestBed</code></h2>
-          <br />
-          <br />
-          <br />
-          <small><a href="https://angular.io/docs/js/latest/api/core/testing/index/TestBed-class.html">https://angular.io/docs/js/latest/api/core/testing/index/TestBed-class.html</a></small>
         </section>
 
         <section>
@@ -366,7 +356,27 @@ it('should do something', async(() => {
           <h2>Promises</h2>
           <br />
           <br />
-          <small>I'm not covering this today, but just be aware of async-ness.</small>
+          <small>I'm not covering this in-depth today, but just be aware of async-ness.</small>
+        </section>
+
+        <section>
+          <p>But, this one quick kinda of important point...</p>
+        </section>
+
+        <section>
+          <pre><code data-trim>
+it('is demonstrating a potential issue with promises', () => {
+  new Promise((resolve, reject) => {
+
+    setTimeout(() => resolve('something'), 10000);
+
+  }).then(x => {
+
+    expect(x).toEqual('something else');
+
+  });
+});
+          </code></pre>
         </section>
 
         <section>
@@ -374,6 +384,21 @@ it('should do something', async(() => {
           <br />
           <br />
           <p>Subscribe to them!</p>
+        </section>
+
+        <section>
+          <pre><code data-trim>
+it('should get expected result', async(inject(
+  [SomeService], (service) => {
+
+  const result = service.getResult();
+
+  result.subscribe(res => {
+    expect(res).toEqual('something');
+  });
+
+})));
+          </code></pre>
         </section>
 
         <section>
@@ -530,7 +555,7 @@ describe('StockRetrieverService (Mocked)', () => {
           <br />
           <br />
           <h2>Questions?</h2>
-          <p><a href="http://kendaleiv.com">Ken Dale</a> / <a href="http://twitter.com/kendaleiv">@kendaleiv</a></p>
+          <p><a href="https://kendaleiv.com">Ken Dale</a> / <a href="http://twitter.com/kendaleiv">@kendaleiv</a></p>
         </section>
       </div>
     </div>
