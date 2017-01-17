@@ -280,12 +280,12 @@ it('should do something', async(() => {
 
   @<span class="highlight">NgModule</span>({                      |     <span class="highlight">TestBed</span>.configureTestingModule({
                                    |
-    <span class="highlight">declarations</span> [                 |       <span class="highlight">declarations</span>: [
+    <span class="highlight">declarations</span>: [                |       <span class="highlight">declarations</span>: [
       AppComponent,                |         AppComponent,
       CurrentResultsComponent,     |         CurrentResultsComponent,
       ResultsLogComponent          |         ResultsLogComponent
     ],                             |       ],
-    <span class="highlight">imports</span> [                      |       <span class="highlight">imports</span>: [
+    <span class="highlight">imports</span>: [                     |       <span class="highlight">imports</span>: [
       BrowserModule,               |         FormsModule,
       FormsModule,                 |         HttpModule
       HttpModule                   |
